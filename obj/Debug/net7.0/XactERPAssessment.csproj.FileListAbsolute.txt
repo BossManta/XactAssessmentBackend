@@ -116,3 +116,15 @@ D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\obj\Debug\net7.0\refint\X
 D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\obj\Debug\net7.0\XactERPAssessment.pdb
 D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\obj\Debug\net7.0\XactERPAssessment.genruntimeconfig.cache
 D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\obj\Debug\net7.0\ref\XactERPAssessment.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\App.Config
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\XactERPAssessment.dll.config
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\System.Drawing.Common.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\System.Security.Permissions.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\System.Windows.Extensions.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+D:\My Files\MyDotnetProjects\XactERPAssessment\Backend\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll

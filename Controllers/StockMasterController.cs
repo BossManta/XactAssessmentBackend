@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
-using System.Net;
+using static XactERPAssessment.StockMasterTools;
 
 namespace XactERPAssessment.Controllers;
 
@@ -9,16 +9,19 @@ namespace XactERPAssessment.Controllers;
 public class StockMasterController : ControllerBase
 {
     private readonly ILogger<StockMasterController> _logger;
+    private readonly string DBConnectionsString;
 
     public StockMasterController(ILogger<StockMasterController> logger)
     {
         _logger = logger;
+        DBConnectionsString = DbConfig.ConnectionString;
     }
 
+    //-------------------ENDPOINTS-----------------------
     [HttpGet]
     public IEnumerable<StockMaster> Get()
     {
-        using (var connection = new SqliteConnection("Data Source=.\\Database\\AppData.db;"))
+        using (var connection = new SqliteConnection(DBConnectionsString))
         {
             connection.Open();
 
@@ -30,18 +33,7 @@ public class StockMasterController : ControllerBase
             {
                 while (reader.Read())
                 {
-                    output.Add(new StockMaster
-                    {
-                        StockCode = reader.GetInt64(0),
-                        StockDescription = reader.GetString(1),
-                        Cost = reader.GetInt64(2),
-                        SellingPrice = reader.GetDouble(3),
-                        TotalPurchasesExclVat = reader.GetDouble(4),
-                        TotalSalesExclVat = reader.GetDouble(5),
-                        QtyPurchased = reader.GetInt64(6),
-                        QtySold = reader.GetInt64(7),
-                        StockOnHand = reader.GetInt64(8)
-                    });
+                    output.Add(PopulateNewStockMasterFromReader(reader));
                 }
             }
             return output;
@@ -52,7 +44,7 @@ public class StockMasterController : ControllerBase
     [HttpGet("search/{id}")]
     public IEnumerable<StockMaster> Get(string id)
     {
-        using (var connection = new SqliteConnection("Data Source=.\\Database\\AppData.db;"))
+        using (var connection = new SqliteConnection(DBConnectionsString))
         {
             connection.Open();
 
@@ -66,18 +58,7 @@ public class StockMasterController : ControllerBase
             {
                 while (reader.Read())
                 {
-                    output.Add(new StockMaster
-                    {
-                        StockCode = reader.GetInt64(0),
-                        StockDescription = reader.GetString(1),
-                        Cost = reader.GetInt32(2),
-                        SellingPrice = reader.GetDouble(3),
-                        TotalPurchasesExclVat = reader.GetDouble(4),
-                        TotalSalesExclVat = reader.GetDouble(5),
-                        QtyPurchased = reader.GetInt64(6),
-                        QtySold = reader.GetInt64(7),
-                        StockOnHand = reader.GetInt64(8)
-                    });
+                    output.Add(PopulateNewStockMasterFromReader(reader));
                 }
             }
             return output;
@@ -86,36 +67,24 @@ public class StockMasterController : ControllerBase
 
     
     [HttpPost("insert")]
-    public ActionResult Post(StockMaster newDebtor)
+    public ActionResult Post(StockMaster newStock)
     {
         try
         {
-            using (var connection = new SqliteConnection("Data Source=.\\Database\\AppData.db;"))
+            using (var connection = new SqliteConnection(DBConnectionsString))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
                 command.CommandText = "INSERT INTO stock_master VALUES (@StockCode, @StockDescription, @Cost, @SellingPrice, @TotalPurchasesExclVat, @TotalSalesExclVat, @QtyPurchased, @QtySold, @StockOnHand);";
                 
-                command.Parameters.AddWithValue("@StockCode", newDebtor.StockCode);
-                command.Parameters.AddWithValue("@StockDescription", newDebtor.StockDescription);
-                command.Parameters.AddWithValue("@Cost", newDebtor.Cost);
-                command.Parameters.AddWithValue("@SellingPrice", newDebtor.SellingPrice);
-                command.Parameters.AddWithValue("@TotalPurchasesExclVat", newDebtor.TotalPurchasesExclVat);
-                command.Parameters.AddWithValue("@TotalSalesExclVat", newDebtor.TotalSalesExclVat);
-                command.Parameters.AddWithValue("@QtyPurchased", newDebtor.QtyPurchased);
-                command.Parameters.AddWithValue("@QtySold", newDebtor.QtySold);
-                command.Parameters.AddWithValue("@StockOnHand", newDebtor.StockOnHand);
+                StockAddAllValuesToCommand(command, newStock);
 
                 command.ExecuteNonQuery();
             }
         }
-        catch(SqliteException e){
-            // if (e.SqliteErrorCode == 19)
-            // {
-            //     return StatusCode(StatusCodes.Status400BadRequest, "Debtor already exists.");
-            // }
-            
+        catch(SqliteException e)
+        {    
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
 
@@ -124,11 +93,11 @@ public class StockMasterController : ControllerBase
 
 
     [HttpPut("edit")]
-    public ActionResult Put(StockMaster newDebtor)
+    public ActionResult Put(StockMaster newStock)
     {
         try
         {
-            using (var connection = new SqliteConnection("Data Source=.\\Database\\AppData.db;"))
+            using (var connection = new SqliteConnection(DBConnectionsString))
             {
                 connection.Open();
 
@@ -144,24 +113,15 @@ public class StockMasterController : ControllerBase
                                         stock_on_hand = @StockOnHand
                                         WHERE stock_code = @StockCode;";
 
-                command.Parameters.AddWithValue("@StockCode", newDebtor.StockCode);
-                command.Parameters.AddWithValue("@StockDescription", newDebtor.StockDescription);
-                command.Parameters.AddWithValue("@Cost", newDebtor.Cost);
-                command.Parameters.AddWithValue("@SellingPrice", newDebtor.SellingPrice);
-                command.Parameters.AddWithValue("@TotalPurchasesExclVat", newDebtor.TotalPurchasesExclVat);
-                command.Parameters.AddWithValue("@TotalSalesExclVat", newDebtor.TotalSalesExclVat);
-                command.Parameters.AddWithValue("@QtyPurchased", newDebtor.QtyPurchased);
-                command.Parameters.AddWithValue("@QtySold", newDebtor.QtySold);
-                command.Parameters.AddWithValue("@StockOnHand", newDebtor.StockOnHand);
+                StockAddAllValuesToCommand(command, newStock);
 
                 command.ExecuteNonQuery();
             }
         }
-
-        catch(SqliteException e){
+        catch(SqliteException e)
+        {
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
-
         return StatusCode(StatusCodes.Status200OK);
     }
 }
