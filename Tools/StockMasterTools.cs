@@ -24,7 +24,7 @@ public static class StockMasterTools
         {
             StockCode = reader.GetInt64(0),
             StockDescription = reader.GetString(1),
-            Cost = reader.GetInt64(2),
+            Cost = reader.GetDouble(2),
             SellingPrice = reader.GetDouble(3),
             TotalPurchasesExclVat = reader.GetDouble(4),
             TotalSalesExclVat = reader.GetDouble(5),
