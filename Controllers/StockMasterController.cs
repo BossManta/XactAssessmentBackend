@@ -9,11 +9,13 @@ namespace XactERPAssessment.Controllers;
 public class StockMasterController : ControllerBase
 {
     private readonly ILogger<StockMasterController> _logger;
+    private readonly IStockLogic _stockLogic;
     private readonly string DBConnectionsString;
 
-    public StockMasterController(ILogger<StockMasterController> logger)
+    public StockMasterController(ILogger<StockMasterController> logger, IStockLogic stockLogic)
     {
         _logger = logger;
+        _stockLogic = stockLogic;
         DBConnectionsString = DbConfig.ConnectionString;
     }
 
@@ -21,107 +23,27 @@ public class StockMasterController : ControllerBase
     [HttpGet]
     public IEnumerable<StockMaster> Get()
     {
-        using (var connection = new SqliteConnection(DBConnectionsString))
-        {
-            connection.Open();
-
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM stock_master;";
-
-            List<StockMaster> output = new List<StockMaster>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    output.Add(PopulateNewStockMasterFromReader(reader));
-                }
-            }
-            return output;
-        }
+        return _stockLogic.Get(DBConnectionsString);
     }
 
 
     [HttpGet("search/{id}")]
     public IEnumerable<StockMaster> Get(string id)
     {
-        using (var connection = new SqliteConnection(DBConnectionsString))
-        {
-            connection.Open();
-
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM stock_master Where stock_code LIKE @SEARCH_CODE OR stock_description LIKE @SEARCH_DISC ;";
-            command.Parameters.AddWithValue("@SEARCH_CODE", $"%{id}%");
-            command.Parameters.AddWithValue("@SEARCH_DISC", $"%{id}%");
-
-            List<StockMaster> output = new List<StockMaster>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    output.Add(PopulateNewStockMasterFromReader(reader));
-                }
-            }
-            return output;
-        }
+        return _stockLogic.Search(DBConnectionsString, id);
     }
 
     
     [HttpPost("insert")]
     public ActionResult Post(StockMaster newStock)
     {
-        try
-        {
-            using (var connection = new SqliteConnection(DBConnectionsString))
-            {
-                connection.Open();
-
-                var command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO stock_master VALUES (@StockCode, @StockDescription, @Cost, @SellingPrice, @TotalPurchasesExclVat, @TotalSalesExclVat, @QtyPurchased, @QtySold, @StockOnHand);";
-                
-                StockAddAllValuesToCommand(command, newStock);
-
-                command.ExecuteNonQuery();
-            }
-        }
-        catch(SqliteException e)
-        {    
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
-
-        return StatusCode(StatusCodes.Status200OK);
+        return _stockLogic.Insert(DBConnectionsString, newStock);
     }
 
 
     [HttpPut("edit")]
-    public ActionResult Put(StockMaster newStock)
+    public ActionResult Put(StockMaster changedStock)
     {
-        try
-        {
-            using (var connection = new SqliteConnection(DBConnectionsString))
-            {
-                connection.Open();
-
-                var command = connection.CreateCommand();
-                command.CommandText = @"UPDATE stock_master SET 
-                                        stock_description = @StockDescription,
-                                        cost = @Cost,
-                                        selling_price = @SellingPrice,
-                                        total_purchases_excl_vat = @TotalPurchasesExclVat,
-                                        total_sales_excl_vat = @TotalSalesExclVat,
-                                        qty_purchased = @QtyPurchased,
-                                        qty_sold = @QtySold,
-                                        stock_on_hand = @StockOnHand
-                                        WHERE stock_code = @StockCode;";
-
-                StockAddAllValuesToCommand(command, newStock);
-
-                command.ExecuteNonQuery();
-            }
-        }
-        catch(SqliteException e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
-        return StatusCode(StatusCodes.Status200OK);
+        return _stockLogic.Edit(DBConnectionsString, changedStock);
     }
 }

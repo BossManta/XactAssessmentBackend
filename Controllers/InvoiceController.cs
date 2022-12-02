@@ -8,52 +8,20 @@ namespace XactERPAssessment.Controllers;
 public class InvoiceController : ControllerBase
 {
     private readonly ILogger<InvoiceController> _logger;
+    private readonly IInvoiceLogic _invoiceLogic;
     private readonly string DBConnectionsString;
 
-    public InvoiceController(ILogger<InvoiceController> logger)
+    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceLogic invoiceLogic)
     {
         _logger = logger;
+        _invoiceLogic = invoiceLogic;
         DBConnectionsString = DbConfig.ConnectionString;
     }
 
 
-    [HttpPost("invoice/create")]
-    public ActionResult Post(InvoiceFoundation foundation)
+    [HttpPost("preview")]
+    public InvoiceFull Post(InvoiceFoundation foundation)
     {
-        //---------------
-        //------WIP------
-        //---------------
-
-
-        // StockMaster[] stockInfoArray = new StockMaster[foundation.StockCodeArray.Length];
-
-        // using (var connection = new SqliteConnection(DBConnectionsString))
-        // {
-        //     connection.Open();
-
-        //     for (int i=0; i<stockInfoArray.Length; i++)
-        //     {
-        //         var command = connection.CreateCommand();
-        //         command.CommandText = "SELECT * FROM stock_master WHERE stock_code == @StockCode";
-        //         command.Parameters.AddWithValue("@StockCode",foundation.StockCodeArray[i]);
-
-        //         using (var reader = command.ExecuteReader())
-        //         {
-        //             stockInfoArray[i] = StockMasterTools.PopulateNewStockMasterFromReader(reader);
-        //         }
-        //     }
-        // }
-
-
-        // InvoiceHeader invoiceHeader = new InvoiceHeader();      
-        // invoiceHeader.AccountCode = foundation.AccountCode;
-        // invoiceHeader.Date = DateOnly.FromDateTime(DateTime.Now);
-        // invoiceHeader.TotalSellAmountExclVat = 0;
-        // for (int i=0;i<foundation.StockCodeArray.Length;i++)
-        // {
-        //     stockInfoArray[i].SellingPrice*foundation.StockCodeArray[i].
-        // }
-
-        return StatusCode(StatusCodes.Status501NotImplemented);
+        return _invoiceLogic.Preview(DBConnectionsString, foundation);
     }
 }

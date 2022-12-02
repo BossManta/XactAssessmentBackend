@@ -17,7 +17,7 @@ public class DebtorsMaster
     public string? Address3 { get; set; }
 
     [Required]
-    public float Balance { get; set; }
+    public double Balance { get; set; }
 
     [Required]
     public DateOnly SalesYearToDate { get; set; }

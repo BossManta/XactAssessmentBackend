@@ -4,20 +4,6 @@ namespace XactERPAssessment;
 
 public static class StockMasterTools
 {
-    //----------------------Reusable Tools---------------------
-    public static void StockAddAllValuesToCommand(SqliteCommand command, StockMaster stock)
-    {
-        command.Parameters.AddWithValue("@StockCode", stock.StockCode);
-        command.Parameters.AddWithValue("@StockDescription", stock.StockDescription);
-        command.Parameters.AddWithValue("@Cost", stock.Cost);
-        command.Parameters.AddWithValue("@SellingPrice", stock.SellingPrice);
-        command.Parameters.AddWithValue("@TotalPurchasesExclVat", stock.TotalPurchasesExclVat);
-        command.Parameters.AddWithValue("@TotalSalesExclVat", stock.TotalSalesExclVat);
-        command.Parameters.AddWithValue("@QtyPurchased", stock.QtyPurchased);
-        command.Parameters.AddWithValue("@QtySold", stock.QtySold);
-        command.Parameters.AddWithValue("@StockOnHand", stock.StockOnHand);
-    }
-
     public static StockMaster PopulateNewStockMasterFromReader(SqliteDataReader reader)
     {
         return new StockMaster

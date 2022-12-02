@@ -8,6 +8,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Business Logic Injection
+builder.Services.AddSingleton<IDebtorLogic, DebtorLogic>();
+builder.Services.AddSingleton<IStockLogic, StockLogic>();
+builder.Services.AddSingleton<IInvoiceLogic, InvoiceLogic>();
+
 builder.Services.AddCors(options => {
     options.AddPolicy(policyName, builder => {
         builder.WithOrigins("*")
