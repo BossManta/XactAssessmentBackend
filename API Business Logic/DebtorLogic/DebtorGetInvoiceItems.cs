@@ -13,9 +13,10 @@ public partial class DebtorLogic: IDebtorLogic
             StockCode = reader.GetInt64(2),
             QtySold = reader.GetInt64(3),
             UnitCost = reader.GetDouble(4),
-            CombinedCost = reader.GetDouble(5),
-            Disc = reader.GetString(6),
-            Total = reader.GetDouble(7)
+            UnitSell = reader.GetDouble(5),
+            CombinedSell = reader.GetDouble(6),
+            Disc = reader.GetString(7),
+            Total = reader.GetDouble(8)
         };
     }
 

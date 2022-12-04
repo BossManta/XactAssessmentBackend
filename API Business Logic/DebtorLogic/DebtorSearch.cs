@@ -11,7 +11,7 @@ public partial class DebtorLogic: IDebtorLogic
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM debtors_master Where account_code LIKE @SEARCH ;";
+            command.CommandText = "SELECT * FROM debtors_master Where account_code LIKE @SEARCH OR name LIKE @SEARCH ;";
             command.Parameters.AddWithValue("@SEARCH", $"%{id}%");
 
             List<DebtorModel> output = new List<DebtorModel>();

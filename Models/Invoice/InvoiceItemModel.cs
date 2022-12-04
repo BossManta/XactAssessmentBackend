@@ -18,9 +18,12 @@ public class InvoiceItemModel
     
     [Required]
     public double UnitCost { get; set; }
+
+    [Required]
+    public double UnitSell { get; set; }
     
     [Required]
-    public double CombinedCost { get; set; }
+    public double CombinedSell { get; set; }
     
     [Required]
     public string? Disc { get; set; }

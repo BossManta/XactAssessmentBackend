@@ -23,8 +23,8 @@ public class DebtorModel
     public double Balance { get; set; }
 
     [Required]
-    public DateOnly SalesYearToDate { get; set; }
+    public double SalesYearToDate { get; set; }
     
     [Required]
-    public DateOnly CostYearToDate { get; set; }
+    public double CostYearToDate { get; set; }
 }

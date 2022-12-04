@@ -20,5 +20,5 @@ public class InvoiceGeneralModel
     public double Vat { get; set; }
 
     [Required]
-    public double TotalCost { get; set; }
+    public double Total { get; set; }
 }

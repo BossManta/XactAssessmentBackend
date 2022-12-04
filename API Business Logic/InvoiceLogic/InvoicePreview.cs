@@ -32,8 +32,9 @@ public partial class InvoiceLogic: IInvoiceLogic
                         itemInfo[i].ItemNo = i+1;
                         itemInfo[i].StockCode = stockInfo.StockCode;
                         itemInfo[i].QtySold = invoiceMinimal.StockCountArray[i].Count;
-                        itemInfo[i].UnitCost = stockInfo.SellingPrice;
-                        itemInfo[i].CombinedCost = stockInfo.SellingPrice*invoiceMinimal.StockCountArray[i].Count;
+                        itemInfo[i].UnitCost = stockInfo.Cost;
+                        itemInfo[i].UnitSell = stockInfo.SellingPrice;
+                        itemInfo[i].CombinedSell = stockInfo.SellingPrice*invoiceMinimal.StockCountArray[i].Count;
                         itemInfo[i].Disc = stockInfo.StockDescription;
                         itemInfo[i].Total = stockInfo.SellingPrice*invoiceMinimal.StockCountArray[i].Count;
                     }
@@ -67,7 +68,7 @@ public partial class InvoiceLogic: IInvoiceLogic
             generalInfo.Date = DateOnly.FromDateTime(DateTime.Now);
             generalInfo.TotalSellAmountExclVat = itemInfo.Sum((item) => item.Total);
             generalInfo.Vat = generalInfo.TotalSellAmountExclVat*0.15; //Add Vat
-            generalInfo.TotalCost = generalInfo.Vat + generalInfo.TotalSellAmountExclVat;
+            generalInfo.Total = generalInfo.Vat + generalInfo.TotalSellAmountExclVat;
         
             return new InvoiceDisplayModel{
                 GeneralInfo = generalInfo,

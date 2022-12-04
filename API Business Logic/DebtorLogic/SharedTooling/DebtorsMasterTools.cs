@@ -15,8 +15,8 @@ public static class DebtorsMasterTools
             Address2 = reader.GetString(3),
             Address3 = reader.GetString(4),
             Balance = reader.GetDouble(5),
-            SalesYearToDate = DateOnly.Parse(reader.GetString(6)),
-            CostYearToDate = DateOnly.Parse(reader.GetString(7))
+            SalesYearToDate = reader.GetDouble(6),
+            CostYearToDate = reader.GetDouble(7)
         };
     }
 

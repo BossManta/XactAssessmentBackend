@@ -7,5 +7,5 @@ public class DebtorInvoiceModel
     public long InvoiceNo { get; set; }
     public DateOnly Date { get; set; }
     public long ItemCount { get; set; }
-    public Double Total { get; set; }
+    public double Total { get; set; }
 }

@@ -20,6 +20,6 @@ public class StockDetailsModel
     public long PurchaseQty { get; set; }
 
     [Required]
-    public Double Total { get; set; }
+    public double Total { get; set; }
 
 }
