@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using XactERPAssessment;
+using XactERPAssessment.Models;
 
 public partial class StockLogic: IStockLogic
 {
-    public ActionResult Insert(string DBConnectionsString, StockMaster newStock)
+    public ActionResult Insert(string DBConnectionsString, StockModel newStock)
     {
         try
         {
@@ -15,7 +16,7 @@ public partial class StockLogic: IStockLogic
                 var command = connection.CreateCommand();
                 command.CommandText = "INSERT INTO stock_master VALUES (@StockCode, @StockDescription, @Cost, @SellingPrice, @TotalPurchasesExclVat, @TotalSalesExclVat, @QtyPurchased, @QtySold, @StockOnHand);";
                 
-                CommandObjectMapper.Map<StockMaster>(command, newStock);
+                CommandObjectMapper.Map<StockModel>(command, newStock);
 
                 command.ExecuteNonQuery();
             }

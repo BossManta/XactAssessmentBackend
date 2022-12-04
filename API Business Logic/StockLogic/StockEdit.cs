@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using XactERPAssessment;
+using XactERPAssessment.Models;
 
 public partial class StockLogic: IStockLogic
 {
-    public ActionResult Edit(string DBConnectionsString, StockMaster changedStock)
+    public ActionResult Edit(string DBConnectionsString, StockModel changedStock)
     {
         try
         {
@@ -24,7 +25,7 @@ public partial class StockLogic: IStockLogic
                                         stock_on_hand = @StockOnHand
                                         WHERE stock_code = @StockCode;";
 
-                CommandObjectMapper.Map<StockMaster>(command, changedStock);
+                CommandObjectMapper.Map<StockModel>(command, changedStock);
 
                 command.ExecuteNonQuery();
             }

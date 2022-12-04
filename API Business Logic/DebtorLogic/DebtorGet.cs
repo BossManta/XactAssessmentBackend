@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
-using XactERPAssessment;
+using XactERPAssessment.Models;
 using static XactERPAssessment.DebtorsMasterTools;
 
 public partial class DebtorLogic: IDebtorLogic
 {
-    public IEnumerable<DebtorsMaster> Get(string DBConnectionsString)
+    public IEnumerable<DebtorModel> Get(string DBConnectionsString)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))
         {
@@ -13,7 +13,7 @@ public partial class DebtorLogic: IDebtorLogic
             var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM debtors_master;";
 
-            List<DebtorsMaster> output = new List<DebtorsMaster>();
+            List<DebtorModel> output = new List<DebtorModel>();
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using XactERPAssessment.Models;
 using Microsoft.Data.Sqlite;
 using static XactERPAssessment.StockMasterTools;
 
@@ -21,29 +22,41 @@ public class StockMasterController : ControllerBase
 
     //-------------------ENDPOINTS-----------------------
     [HttpGet]
-    public IEnumerable<StockMaster> Get()
+    public IEnumerable<StockModel> Get()
     {
         return _stockLogic.Get(DBConnectionsString);
     }
 
 
     [HttpGet("search/{id}")]
-    public IEnumerable<StockMaster> Get(string id)
+    public IEnumerable<StockModel> Get(string id)
     {
         return _stockLogic.Search(DBConnectionsString, id);
     }
 
     
     [HttpPost("insert")]
-    public ActionResult Post(StockMaster newStock)
+    public ActionResult Post(StockModel newStock)
     {
         return _stockLogic.Insert(DBConnectionsString, newStock);
     }
 
 
     [HttpPut("edit")]
-    public ActionResult Put(StockMaster changedStock)
+    public ActionResult Put(StockModel changedStock)
     {
         return _stockLogic.Edit(DBConnectionsString, changedStock);
+    }
+
+    [HttpPatch("addstock")]
+    public ActionResult Patch(StockCount changedStock)
+    {
+        return _stockLogic.AddStock(DBConnectionsString, changedStock);
+    }
+    
+    [HttpGet("details/{stockCode}")]
+    public IEnumerable<StockDetailsModel> GetDetails(long stockCode)
+    {
+        return _stockLogic.Details(DBConnectionsString, stockCode);
     }
 }

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace XactERPAssessment;
+namespace XactERPAssessment.Models;
 
-public class StockMaster
+public class StockModel
 {
     [Required]
     public long StockCode { get; set; }

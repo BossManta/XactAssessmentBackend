@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-public class InvoiceDetail
+namespace XactERPAssessment.Models;
+
+public class InvoiceItemModel
 {
     [Required]
     public long InvoiceNo { get; set; }
@@ -18,7 +20,7 @@ public class InvoiceDetail
     public double UnitCost { get; set; }
     
     [Required]
-    public double UnitSell { get; set; }
+    public double CombinedCost { get; set; }
     
     [Required]
     public string? Disc { get; set; }

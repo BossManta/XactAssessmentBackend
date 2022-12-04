@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using XactERPAssessment;
+using XactERPAssessment.Models;
 
 public partial class DebtorLogic: IDebtorLogic
 {
-    public ActionResult Edit(string DBConnectionsString, DebtorsMaster newDebtor)
+    public ActionResult Edit(string DBConnectionsString, DebtorModel newDebtor)
     {
         try
         {
@@ -14,6 +15,7 @@ public partial class DebtorLogic: IDebtorLogic
 
                 var command = connection.CreateCommand();
                 command.CommandText = @"UPDATE debtors_master SET 
+                                        name = @Name,
                                         address1 = @Address1,
                                         address2 = @Address2,
                                         address3 = @Address3,
@@ -22,7 +24,7 @@ public partial class DebtorLogic: IDebtorLogic
                                         cost_year_to_date = @CostYearToDate
                                         WHERE account_code = @AccountCode;";
 
-                CommandObjectMapper.Map<DebtorsMaster>(command, newDebtor);
+                CommandObjectMapper.Map<DebtorModel>(command, newDebtor);
 
                 command.ExecuteNonQuery();
             }

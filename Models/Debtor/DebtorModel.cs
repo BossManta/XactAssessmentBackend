@@ -1,11 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace XactERPAssessment;
+namespace XactERPAssessment.Models;
 
-public class DebtorsMaster
+public class DebtorModel
 {
     [Required]
     public long AccountCode { get; set; }
+
+    [Required]
+    public string? Name { get; set; }
     
     [Required]
     public string? Address1 { get; set; }

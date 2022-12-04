@@ -1,10 +1,12 @@
-using XactERPAssessment;
+using XactERPAssessment.Models;
 using Microsoft.AspNetCore.Mvc;
 
 public interface IStockLogic
 {
-    public IEnumerable<StockMaster> Get(string DBConnectionsString);
-    public IEnumerable<StockMaster> Search(string DBConnectionsString, string id);
-    public ActionResult Edit(string DBConnectionsString, StockMaster changedStock);
-    public ActionResult Insert(string DBConnectionsString, StockMaster newStock);
+    public IEnumerable<StockModel> Get(string DBConnectionsString);
+    public IEnumerable<StockModel> Search(string DBConnectionsString, string id);
+    public ActionResult Edit(string DBConnectionsString, StockModel changedStock);
+    public ActionResult Insert(string DBConnectionsString, StockModel newStock);
+    public ActionResult AddStock(string DBConnectionString, StockCount stock);
+    public IEnumerable<StockDetailsModel> Details(string DBConnectionString, long stockId);
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using XactERPAssessment.Models;
 using Microsoft.Data.Sqlite;
 
 namespace XactERPAssessment.Controllers;
@@ -19,9 +20,15 @@ public class InvoiceController : ControllerBase
     }
 
 
-    [HttpPost("preview")]
-    public InvoiceFull Post(InvoiceFoundation foundation)
+    [HttpPut("preview")]
+    public InvoiceDisplayModel PutPreview(InvoiceMinimalModel invoiceMinimal)
     {
-        return _invoiceLogic.Preview(DBConnectionsString, foundation);
+        return _invoiceLogic.Preview(DBConnectionsString, invoiceMinimal);
+    }
+
+    [HttpPut("submit")]
+    public InvoiceDisplayModel PutSubmit(InvoiceMinimalModel invoiceMinimal)
+    {
+        return _invoiceLogic.Submit(DBConnectionsString, invoiceMinimal);
     }
 }

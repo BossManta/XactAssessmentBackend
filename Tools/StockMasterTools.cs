@@ -1,12 +1,13 @@
 using Microsoft.Data.Sqlite;
+using XactERPAssessment.Models;
 
 namespace XactERPAssessment;
 
 public static class StockMasterTools
 {
-    public static StockMaster PopulateNewStockMasterFromReader(SqliteDataReader reader)
+    public static StockModel PopulateNewStockMasterFromReader(SqliteDataReader reader)
     {
-        return new StockMaster
+        return new StockModel
         {
             StockCode = reader.GetInt64(0),
             StockDescription = reader.GetString(1),

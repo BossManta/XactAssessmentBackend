@@ -1,54 +1,78 @@
 using Microsoft.Data.Sqlite;
 using XactERPAssessment;
+using XactERPAssessment.Models;
+using static XactERPAssessment.DebtorsMasterTools;
 
 public partial class InvoiceLogic: IInvoiceLogic
 {
-    public InvoiceFull Preview(string DBConnectionsString, InvoiceFoundation foundation)
+    public InvoiceDisplayModel Preview(string DBConnectionsString, InvoiceMinimalModel invoiceMinimal)
     {
-        int totalUniqueItems = foundation.StockCountArray.Length;
-        InvoiceDetail[] invoiceDetails = new InvoiceDetail[totalUniqueItems];
+        int totalUniqueItems = invoiceMinimal.StockCountArray.Length;
+        InvoiceItemModel[] itemInfo = new InvoiceItemModel[totalUniqueItems];
 
         SqliteCommand command;
         using (var connection = new SqliteConnection(DBConnectionsString))
         {
             connection.Open();
 
+            //Gather and generate all invoice item info.
             for (int i=0; i<totalUniqueItems; i++)
             {
                 command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM stock_master WHERE stock_code == @StockCode";
-                command.Parameters.AddWithValue("@StockCode",foundation.StockCountArray[i].StockCode);
+                command.Parameters.AddWithValue("@StockCode",invoiceMinimal.StockCountArray[i].StockCode);
 
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        StockMaster stockInfo = StockMasterTools.PopulateNewStockMasterFromReader(reader);
+                        StockModel stockInfo = StockMasterTools.PopulateNewStockMasterFromReader(reader);
 
-                        //Propulate Invoice Detail data for each stock item on invoice
-                        invoiceDetails[i] = new InvoiceDetail();
-                        invoiceDetails[i].ItemNo = i+1;
-                        invoiceDetails[i].StockCode = stockInfo.StockCode;
-                        invoiceDetails[i].QtySold = foundation.StockCountArray[i].Count;
-                        invoiceDetails[i].UnitCost = stockInfo.Cost;
-                        invoiceDetails[i].UnitSell = stockInfo.SellingPrice;
-                        invoiceDetails[i].Disc = stockInfo.StockDescription;
-                        invoiceDetails[i].Total = stockInfo.SellingPrice*foundation.StockCountArray[i].Count;
+                        itemInfo[i] = new InvoiceItemModel();
+                        itemInfo[i].ItemNo = i+1;
+                        itemInfo[i].StockCode = stockInfo.StockCode;
+                        itemInfo[i].QtySold = invoiceMinimal.StockCountArray[i].Count;
+                        itemInfo[i].UnitCost = stockInfo.SellingPrice;
+                        itemInfo[i].CombinedCost = stockInfo.SellingPrice*invoiceMinimal.StockCountArray[i].Count;
+                        itemInfo[i].Disc = stockInfo.StockDescription;
+                        itemInfo[i].Total = stockInfo.SellingPrice*invoiceMinimal.StockCountArray[i].Count;
                     }
                 }
             }
 
-            //Populate Invoice Header data
-            InvoiceHeader invoiceHeader = new InvoiceHeader();      
-            invoiceHeader.AccountCode = foundation.AccountCode;
-            invoiceHeader.Date = DateOnly.FromDateTime(DateTime.Now);
-            invoiceHeader.TotalSellAmountExclVat = invoiceDetails.Sum((invoiceDetail) => invoiceDetail.Total);
-            invoiceHeader.Vat = invoiceHeader.TotalSellAmountExclVat*0.15; //Add Vat
-            invoiceHeader.TotalCost = invoiceHeader.Vat + invoiceHeader.TotalSellAmountExclVat;
+
+            //Fetch invoice debtor information
+            DebtorModel debtorInfo;
+
+            command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM debtors_master WHERE account_code = @AccountCode LIMIT 1;";
+            command.Parameters.AddWithValue("@AccountCode", invoiceMinimal.AccountCode);
+
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    debtorInfo = PopulateNewDebtorMasterFromReader(reader);
+                }
+                else
+                {
+                    throw new Exception("Could not load debtor info");
+                }
+            }
+
+
+            //Gather and generate all general invoice info
+            InvoiceGeneralModel generalInfo = new InvoiceGeneralModel();      
+            generalInfo.AccountCode = invoiceMinimal.AccountCode;
+            generalInfo.Date = DateOnly.FromDateTime(DateTime.Now);
+            generalInfo.TotalSellAmountExclVat = itemInfo.Sum((item) => item.Total);
+            generalInfo.Vat = generalInfo.TotalSellAmountExclVat*0.15; //Add Vat
+            generalInfo.TotalCost = generalInfo.Vat + generalInfo.TotalSellAmountExclVat;
         
-            return new InvoiceFull{
-                header = invoiceHeader,
-                details = invoiceDetails
+            return new InvoiceDisplayModel{
+                GeneralInfo = generalInfo,
+                ItemInfo = itemInfo,
+                DebtorInfo = debtorInfo
             };
      
         }

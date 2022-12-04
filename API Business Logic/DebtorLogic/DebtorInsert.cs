@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using XactERPAssessment;
+using XactERPAssessment.Models;
 
 public partial class DebtorLogic: IDebtorLogic
 {
-    public ActionResult Insert(string DBConnectionsString, DebtorsMaster newDebtor)
+    public ActionResult Insert(string DBConnectionsString, DebtorModel newDebtor)
     {
         try
         {
@@ -13,8 +14,8 @@ public partial class DebtorLogic: IDebtorLogic
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO debtors_master VALUES (@AccountCode, @Address1, @Address2, @Address3, @Balance, @SalesYearToDate, @CostYearToDate);";
-                CommandObjectMapper.Map<DebtorsMaster>(command, newDebtor);
+                command.CommandText = "INSERT INTO debtors_master VALUES (@AccountCode, @Name, @Address1, @Address2, @Address3, @Balance, @SalesYearToDate, @CostYearToDate);";
+                CommandObjectMapper.Map<DebtorModel>(command, newDebtor);
 
                 command.ExecuteNonQuery();
             }

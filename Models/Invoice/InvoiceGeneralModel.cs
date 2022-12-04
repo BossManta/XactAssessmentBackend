@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace XactERPAssessment;
+namespace XactERPAssessment.Models;
 
-public class InvoiceHeader
+public class InvoiceGeneralModel
 {
     [Required]
     public long InvoiceNo { get; set; }

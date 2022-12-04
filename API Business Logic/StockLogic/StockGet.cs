@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
-using XactERPAssessment;
+using XactERPAssessment.Models;
 using static XactERPAssessment.StockMasterTools;
 
 public partial class StockLogic: IStockLogic
 {
-    public IEnumerable<StockMaster> Get(string DBConnectionsString)
+    public IEnumerable<StockModel> Get(string DBConnectionsString)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))
         {
@@ -13,7 +13,7 @@ public partial class StockLogic: IStockLogic
             var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM stock_master;";
 
-            List<StockMaster> output = new List<StockMaster>();
+            List<StockModel> output = new List<StockModel>();
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
