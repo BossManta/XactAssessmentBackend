@@ -3,6 +3,11 @@ using XactERPAssessment.Models;
 
 namespace XactERPAssessment.Controllers;
 
+///////////////////////////////////////////////////////////////////////////
+//This controller contains all the endpoints related to managing debtors.//
+///////////////////////////////////////////////////////////////////////////
+
+
 [ApiController]
 [Route("api/[controller]")]
 public class DebtorsMasterController : ControllerBase
