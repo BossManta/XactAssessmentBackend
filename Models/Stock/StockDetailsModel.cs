@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace XactERPAssessment.Models;
 
+//Model that represents stock transaction information.
 public class StockDetailsModel
 {
     [Required]

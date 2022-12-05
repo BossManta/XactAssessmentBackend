@@ -20,6 +20,7 @@ public partial class DebtorLogic: IDebtorLogic
         };
     }
 
+    //Returns a list of items from a given invoice number. This is used to show items purchased by debtor.
     public IEnumerable<InvoiceItemModel> GetInvoiceItems(string DBConnectionsString, long invoiceNo)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

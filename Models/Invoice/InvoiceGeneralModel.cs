@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace XactERPAssessment.Models;
 
+//Model that represents general invoice information.
+//In other words everything other than stock item information
 public class InvoiceGeneralModel
 {
     [Required]

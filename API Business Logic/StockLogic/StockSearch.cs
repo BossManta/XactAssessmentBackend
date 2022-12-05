@@ -4,6 +4,7 @@ using static XactERPAssessment.StockMasterTools;
 
 public partial class StockLogic: IStockLogic
 {
+    //Uses provided string to find a related stock item. Searches description and stock codes.
     public IEnumerable<StockModel> Search(string DBConnectionsString, string id)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))
@@ -11,9 +12,8 @@ public partial class StockLogic: IStockLogic
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM stock_master Where stock_code LIKE @SEARCH_CODE OR stock_description LIKE @SEARCH_DISC ;";
-            command.Parameters.AddWithValue("@SEARCH_CODE", $"%{id}%");
-            command.Parameters.AddWithValue("@SEARCH_DISC", $"%{id}%");
+            command.CommandText = "SELECT * FROM stock_master Where stock_code LIKE @SEARCH OR stock_description LIKE @SEARCH;";
+            command.Parameters.AddWithValue("@SEARCH", $"%{id}%");
 
             List<StockModel> output = new List<StockModel>();
             using (var reader = command.ExecuteReader())

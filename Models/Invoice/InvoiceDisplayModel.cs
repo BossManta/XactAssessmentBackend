@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using XactERPAssessment;
 
 namespace XactERPAssessment.Models;
 
+//Model that contains all information in order to display invoice.
 public class InvoiceDisplayModel
 {
     [Required]

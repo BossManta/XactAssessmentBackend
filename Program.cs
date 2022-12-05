@@ -1,10 +1,11 @@
-var policyName = "_myAllowSpecificOrigins";
+var policyName = "_myAllowSpecificOrigins"; //Cors
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+//Adds service to do controller endpoint routing.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//configure Swagger(A tool to test and show API endpoints)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -13,6 +14,8 @@ builder.Services.AddSingleton<IDebtorLogic, DebtorLogic>();
 builder.Services.AddSingleton<IStockLogic, StockLogic>();
 builder.Services.AddSingleton<IInvoiceLogic, InvoiceLogic>();
 
+
+//Configure Cors
 builder.Services.AddCors(options => {
     options.AddPolicy(policyName, builder => {
         builder.WithOrigins("*")
@@ -23,7 +26,7 @@ builder.Services.AddCors(options => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Allow for Swagger to be used in development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

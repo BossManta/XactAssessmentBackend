@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using XactERPAssessment.Models;
 
+//These are all actions related to debtors.
 public interface IDebtorLogic
 {
     public IEnumerable<DebtorModel> Get(string DBConnectionsString);

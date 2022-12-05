@@ -5,6 +5,9 @@ using static XactERPAssessment.DebtorsMasterTools;
 
 public partial class InvoiceLogic: IInvoiceLogic
 {
+    //Takes in stripped down invoice and generates detailed invoice.
+    //Stripped down invoice only provides debtor account code and list of stock codes.
+    //Note: This does not make any changes to the database. It only generates a preview invoice.
     public InvoiceDisplayModel Preview(string DBConnectionsString, InvoiceMinimalModel invoiceMinimal)
     {
         int totalUniqueItems = invoiceMinimal.StockCountArray.Length;

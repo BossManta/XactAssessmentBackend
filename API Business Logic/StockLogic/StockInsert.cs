@@ -5,6 +5,7 @@ using XactERPAssessment.Models;
 
 public partial class StockLogic: IStockLogic
 {
+    //Inserts given stock item into database
     public ActionResult Insert(string DBConnectionsString, StockModel newStock)
     {
         try

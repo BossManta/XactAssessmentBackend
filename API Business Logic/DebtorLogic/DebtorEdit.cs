@@ -5,7 +5,8 @@ using XactERPAssessment.Models;
 
 public partial class DebtorLogic: IDebtorLogic
 {
-    public ActionResult Edit(string DBConnectionsString, DebtorModel newDebtor)
+    //Replaces all values for a debtor based on new passed in debtor
+    public ActionResult Edit(string DBConnectionsString, DebtorModel changedDebtor)
     {
         try
         {
@@ -24,7 +25,7 @@ public partial class DebtorLogic: IDebtorLogic
                                         cost_year_to_date = @CostYearToDate
                                         WHERE account_code = @AccountCode;";
 
-                CommandObjectMapper.Map<DebtorModel>(command, newDebtor);
+                CommandObjectMapper.Map<DebtorModel>(command, changedDebtor);
 
                 command.ExecuteNonQuery();
             }

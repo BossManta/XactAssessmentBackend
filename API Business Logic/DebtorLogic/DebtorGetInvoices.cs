@@ -15,6 +15,7 @@ public partial class DebtorLogic: IDebtorLogic
         };
     }
 
+    //Retrieves list of all invoices(simplified) associated with a given debtor. 
     public IEnumerable<DebtorInvoiceModel> GetInvoices(string DBConnectionsString, long accountCode)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

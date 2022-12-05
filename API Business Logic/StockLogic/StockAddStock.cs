@@ -5,6 +5,8 @@ using XactERPAssessment.Models;
 
 public partial class StockLogic: IStockLogic
 {
+    //Takes stock count information and adds stock to relevant stock item.
+    //Stock count information includes stock code and stock count. 
     public ActionResult AddStock(string DBConnectionsString, StockCount stockCount)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

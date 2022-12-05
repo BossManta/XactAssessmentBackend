@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using XactERPAssessment.Models;
-using Microsoft.Data.Sqlite;
-using static XactERPAssessment.StockMasterTools;
 
 namespace XactERPAssessment.Controllers;
+
+/////////////////////////////////////////////////////////////////////////
+//This controller contains all the endpoints related to managing stock.//
+/////////////////////////////////////////////////////////////////////////
 
 [ApiController]
 [Route("api/[controller]")]

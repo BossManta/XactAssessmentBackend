@@ -4,6 +4,7 @@ using static XactERPAssessment.DebtorsMasterTools;
 
 public partial class DebtorLogic: IDebtorLogic
 {
+    //Uses provided string to find a related debtor. Searches names and account codes.
     public IEnumerable<DebtorModel> Search(string DBConnectionsString, string id)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

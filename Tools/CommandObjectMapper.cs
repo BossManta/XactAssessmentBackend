@@ -4,7 +4,8 @@ using Microsoft.Data.Sqlite;
 namespace XactERPAssessment;
 
 
-//Maps an object property to a command parameter. Example: Maps objToMap.test to @test 
+//Maps an object property to a command parameter. Example: Maps objToMap.test to @test
+//Used to extract model information to add to the database.
 public static class CommandObjectMapper
 {
     public static void Map<T>(SqliteCommand command, T objToMap)

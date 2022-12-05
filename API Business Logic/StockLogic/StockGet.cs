@@ -4,6 +4,8 @@ using static XactERPAssessment.StockMasterTools;
 
 public partial class StockLogic: IStockLogic
 {
+    
+    //Retrieves all stock items from database and returns them
     public IEnumerable<StockModel> Get(string DBConnectionsString)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

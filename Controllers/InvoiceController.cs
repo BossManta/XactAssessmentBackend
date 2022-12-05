@@ -4,6 +4,10 @@ using Microsoft.Data.Sqlite;
 
 namespace XactERPAssessment.Controllers;
 
+////////////////////////////////////////////////////////////////////////////
+//This controller contains all the endpoints related to managing invoices.//
+////////////////////////////////////////////////////////////////////////////
+
 [ApiController]
 [Route("api/[controller]")]
 public class InvoiceController : ControllerBase

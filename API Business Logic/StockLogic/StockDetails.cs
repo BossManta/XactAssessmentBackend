@@ -18,6 +18,7 @@ public partial class StockLogic: IStockLogic
         };
     }
 
+    //Retrieves transaction details for given stock item.
     public IEnumerable<StockDetailsModel> Details(string DBConnectionsString, long stockCode)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

@@ -4,6 +4,8 @@ using static XactERPAssessment.DebtorsMasterTools;
 
 public partial class DebtorLogic: IDebtorLogic
 {
+    
+    //Retrieves all debtors from database and returns them
     public IEnumerable<DebtorModel> Get(string DBConnectionsString)
     {
         using (var connection = new SqliteConnection(DBConnectionsString))

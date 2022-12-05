@@ -5,6 +5,7 @@ using XactERPAssessment.Models;
 
 public partial class StockLogic: IStockLogic
 {
+    //Replaces all values for a stock item based on new passed in stock item.
     public ActionResult Edit(string DBConnectionsString, StockModel changedStock)
     {
         try

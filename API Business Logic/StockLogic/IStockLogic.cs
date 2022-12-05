@@ -1,6 +1,7 @@
 using XactERPAssessment.Models;
 using Microsoft.AspNetCore.Mvc;
 
+//These are all actions related to debtors.
 public interface IStockLogic
 {
     public IEnumerable<StockModel> Get(string DBConnectionsString);

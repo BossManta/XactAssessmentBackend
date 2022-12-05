@@ -5,6 +5,8 @@ using XactERPAssessment.Models;
 
 public partial class DebtorLogic: IDebtorLogic
 {
+    
+    //Inserts new debtor into database.
     public ActionResult Insert(string DBConnectionsString, DebtorModel newDebtor)
     {
         try

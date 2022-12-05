@@ -4,6 +4,8 @@ using XactERPAssessment.Models;
 
 public partial class InvoiceLogic: IInvoiceLogic
 {
+    //Takes in stripped down invoice and generates detailed invoice.
+    //Stripped down invoice only provides debtor account code and list of stock codes.
     public InvoiceDisplayModel Submit(string DBConnectionsString, InvoiceMinimalModel invoiceMinimal)
     {
         InvoiceDisplayModel invoiceData = Preview(DBConnectionsString, invoiceMinimal);

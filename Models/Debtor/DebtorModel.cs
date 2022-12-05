@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace XactERPAssessment.Models;
 
+//Model that represents debtor information.
 public class DebtorModel
 {
     [Required]
